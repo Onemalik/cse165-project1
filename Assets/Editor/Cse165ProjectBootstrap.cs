@@ -443,6 +443,7 @@ namespace CSE165.Project1.Editor
             if (xrOrigin == null)
                 throw new MissingComponentException("The XR rig prefab is missing XROrigin.");
 
+            ConfigureRigInteractions(rig.transform);
             AddDirectSelectionIndicators(rig.transform, materials.indicator);
             CreateMovementIndicator(xrOrigin, materials.indicator);
 
@@ -451,13 +452,13 @@ namespace CSE165.Project1.Editor
 
             CreateInstructionBoard(
                 "Controls",
-                "Trigger: select, grab, and spawn\nGrip both hands: scale selected item\nThumbstick: move or teleport",
+                "Grip: direct grab or tap a nearby pad\nTrigger: distance select and remote grab\nTwo hands on one item: scale\nLeft stick: move | Right stick: turn / teleport",
                 new Vector3(0f, 1.45f, 1.95f),
                 materials.board);
 
             CreateInstructionBoard(
                 "Selection + Travel",
-                "Hand halos = direct grab\nCurved ray = distance select\nGround arrow = move direction\nTeleport ray = travel target",
+                "Hand halos = direct selection\nCurved ray = distance selection\nFloor arrow + chevrons = move + turn\nTeleport ray = travel target",
                 new Vector3(2.1f, 1.45f, 0f),
                 materials.board);
 
@@ -563,19 +564,103 @@ namespace CSE165.Project1.Editor
             }
         }
 
+        static void ConfigureRigInteractions(Transform rigRoot)
+        {
+            ConfigureNearFarInteractor(rigRoot, "Left Controller");
+            ConfigureNearFarInteractor(rigRoot, "Right Controller");
+            DisableOptionalLocomotion(rigRoot);
+        }
+
+        static void ConfigureNearFarInteractor(Transform rigRoot, string controllerName)
+        {
+            var controller = FindChildByName(rigRoot, controllerName);
+            if (controller == null)
+                return;
+
+            var nearFarRoot = FindChildByNameContains(controller, "NearFarInteractor");
+            if (nearFarRoot == null)
+                return;
+
+            foreach (var behaviour in nearFarRoot.GetComponentsInChildren<MonoBehaviour>(true))
+            {
+                if (behaviour == null)
+                    continue;
+
+                AssignTriggerSelect(behaviour);
+                DisableManipulationInput(behaviour);
+            }
+        }
+
+        static void DisableOptionalLocomotion(Transform rigRoot)
+        {
+            var jump = FindChildByName(rigRoot, "Jump");
+            if (jump != null)
+                jump.gameObject.SetActive(false);
+        }
+
+        static void AssignTriggerSelect(MonoBehaviour behaviour)
+        {
+            var serializedObject = new SerializedObject(behaviour);
+            var selectPerformed = serializedObject.FindProperty("m_SelectInput.m_InputActionReferencePerformed");
+            var selectValue = serializedObject.FindProperty("m_SelectInput.m_InputActionReferenceValue");
+            var activatePerformed = serializedObject.FindProperty("m_ActivateInput.m_InputActionReferencePerformed");
+            var activateValue = serializedObject.FindProperty("m_ActivateInput.m_InputActionReferenceValue");
+
+            if (selectPerformed == null || selectValue == null || activatePerformed == null || activateValue == null)
+                return;
+
+            if (activatePerformed.objectReferenceValue == null && activateValue.objectReferenceValue == null)
+                return;
+
+            selectPerformed.objectReferenceValue = activatePerformed.objectReferenceValue;
+            selectValue.objectReferenceValue = activateValue.objectReferenceValue;
+            serializedObject.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        static void DisableManipulationInput(MonoBehaviour behaviour)
+        {
+            var serializedObject = new SerializedObject(behaviour);
+            var useManipulationInput = serializedObject.FindProperty("m_UseManipulationInput");
+            var manipulationInputReference = serializedObject.FindProperty("m_ManipulationInput.m_InputActionReference");
+
+            var changed = false;
+
+            if (useManipulationInput != null)
+            {
+                useManipulationInput.boolValue = false;
+                changed = true;
+            }
+
+            if (manipulationInputReference != null)
+            {
+                manipulationInputReference.objectReferenceValue = null;
+                changed = true;
+            }
+
+            if (changed)
+                serializedObject.ApplyModifiedPropertiesWithoutUndo();
+        }
+
         static void CreateMovementIndicator(XROrigin xrOrigin, Material indicatorMaterial)
         {
             var arrowRoot = new GameObject("Move Direction Indicator");
             var indicator = arrowRoot.AddComponent<PlayerDirectionIndicator>();
             indicator.SetOrigin(xrOrigin);
 
-            CreateArrowPiece(arrowRoot.transform, new Vector3(0f, 0f, 0.14f), new Vector3(0.12f, 0.015f, 0.36f), indicatorMaterial);
-            CreateArrowPiece(arrowRoot.transform, new Vector3(0f, 0f, 0.34f), new Vector3(0.3f, 0.015f, 0.18f), indicatorMaterial);
+            var moveStem = CreateArrowPiece(arrowRoot.transform, "Move Stem", new Vector3(0f, 0f, 0.14f), new Vector3(0.12f, 0.015f, 0.36f), indicatorMaterial);
+            var moveHead = CreateArrowPiece(arrowRoot.transform, "Move Head", new Vector3(0f, 0f, 0.34f), new Vector3(0.3f, 0.015f, 0.18f), indicatorMaterial);
+            var turnLeft = CreateTurnChevron(arrowRoot.transform, "Turn Left Indicator", new Vector3(-0.24f, 0f, 0.04f), -1f, indicatorMaterial);
+            var turnRight = CreateTurnChevron(arrowRoot.transform, "Turn Right Indicator", new Vector3(0.24f, 0f, 0.04f), 1f, indicatorMaterial);
+
+            indicator.SetVisuals(moveStem, moveHead, turnLeft, turnRight);
+            turnLeft.SetActive(false);
+            turnRight.SetActive(false);
         }
 
-        static void CreateArrowPiece(Transform parent, Vector3 localPosition, Vector3 localScale, Material material)
+        static Transform CreateArrowPiece(Transform parent, string name, Vector3 localPosition, Vector3 localScale, Material material)
         {
             var piece = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            piece.name = name;
             piece.transform.SetParent(parent, false);
             piece.transform.localPosition = localPosition;
             piece.transform.localScale = localScale;
@@ -587,6 +672,22 @@ namespace CSE165.Project1.Editor
             var collider = piece.GetComponent<Collider>();
             if (collider != null)
                 Object.DestroyImmediate(collider);
+
+            return piece.transform;
+        }
+
+        static GameObject CreateTurnChevron(Transform parent, string name, Vector3 localPosition, float direction, Material material)
+        {
+            var chevronRoot = new GameObject(name);
+            chevronRoot.transform.SetParent(parent, false);
+            chevronRoot.transform.localPosition = localPosition;
+
+            CreateArrowPiece(chevronRoot.transform, "Bar A", new Vector3(0f, 0f, 0.08f), new Vector3(0.065f, 0.012f, 0.14f), material)
+                .localRotation = Quaternion.Euler(0f, direction * 32f, 0f);
+            CreateArrowPiece(chevronRoot.transform, "Bar B", new Vector3(0f, 0f, -0.01f), new Vector3(0.065f, 0.012f, 0.14f), material)
+                .localRotation = Quaternion.Euler(0f, direction * -32f, 0f);
+
+            return chevronRoot;
         }
 
         static void CreateSpawnPad(SpawnSource source, Vector3 position, Material accentMaterial, Material boardMaterial)
@@ -613,7 +714,7 @@ namespace CSE165.Project1.Editor
             serializedSpawnPad.FindProperty("m_SpawnPoint").objectReferenceValue = spawnPoint;
             serializedSpawnPad.ApplyModifiedPropertiesWithoutUndo();
 
-            CreateInstructionBoard(source.displayName, "Trigger to spawn", position + new Vector3(0f, 1.05f, 0f), boardMaterial, 0.38f, 16);
+            CreateInstructionBoard(source.displayName, "Grip nearby or trigger from a distance", position + new Vector3(0f, 1.05f, 0f), boardMaterial, 0.48f, 16);
         }
 
         static void CreateInstructionBoard(string title, string content, Vector3 position, Material boardMaterial, float boardWidth = 0.9f, int fontSize = 24)
@@ -720,6 +821,16 @@ namespace CSE165.Project1.Editor
                    !path.StartsWith("Assets/Editor/") &&
                    !path.StartsWith("Assets/Scenes/") &&
                    !path.StartsWith("Assets/Scripts/");
+        }
+
+        static Transform FindChildByName(Transform root, string name)
+        {
+            return root.GetComponentsInChildren<Transform>(true).FirstOrDefault(child => child.name == name);
+        }
+
+        static Transform FindChildByNameContains(Transform root, string partialName)
+        {
+            return root.GetComponentsInChildren<Transform>(true).FirstOrDefault(child => child.name.Contains(partialName));
         }
 
         struct MaterialSet
