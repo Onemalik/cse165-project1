@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &132081353
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -225,7 +225,7 @@ Transform:
   m_GameObject: {fileID: 132081352}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.94933194, z: -0.31427515, w: -0}
-  m_LocalPosition: {x: 0, y: 1.45, z: 1.95}
+  m_LocalPosition: {x: 0, y: 1.45, z: 2.4}
   m_LocalScale: {x: 0.9, y: 0.04, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -351,12 +351,24 @@ PrefabInstance:
       value: XR Rig
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.4
       objectReference: {fileID: 0}
     - target: {fileID: 1717954561962503726, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -390,6 +402,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 58445280694286476, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1470279098769358944, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2190828208922718286, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5617778599117486727, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -410,7 +438,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0cb9aa70a22847b5925ee5f067c10a9, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: 
 --- !u!4 &361123945 stripped
 Transform:
@@ -546,7 +574,7 @@ GameObject:
   - component: {fileID: 631304322}
   - component: {fileID: 631304321}
   m_Layer: 0
-  m_Name: Move Direction Indicator
+  m_Name: Travel Target Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -562,11 +590,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eda74118259cc43a4a79899cf49dc9fa, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::CSE165.Project1.PlayerDirectionIndicator
   m_XROrigin: {fileID: 361123944}
-  m_ForwardOffset: 0.55
+  m_MoveStem: {fileID: 1541829588}
+  m_MoveHead: {fileID: 2044766368}
+  m_TurnLeftIndicator: {fileID: 0}
+  m_TurnRightIndicator: {fileID: 0}
+  m_MaxTeleportDistance: 14
   m_GroundOffset: 0.02
+  m_MinimumUpAlignment: 0.7
+  m_AllowLeftTriggerTeleport: 1
+  m_AllowRightTriggerTeleport: 1
+  m_TriggerThreshold: 0.65
+  m_FallbackTeleportDistance: 3.5
 --- !u!4 &631304322
 Transform:
   m_ObjectHideFlags: 0
@@ -616,12 +653,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a772cdda514fe4d4998a198a40d95599, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::CSE165.Project1.SpawnPad
   m_PrefabToSpawn: {fileID: 7249165047448114063, guid: f601eed58938447bebd2fe97c7195232, type: 3}
+  m_PrefabsToSpawn:
+  - {fileID: 7249165047448114063, guid: f601eed58938447bebd2fe97c7195232, type: 3}
+  - {fileID: 7195988102628993825, guid: f30e659f4f2c1463690472ab1035718d, type: 3}
+  - {fileID: 6651201712044238682, guid: 08ce0d61ecc014a7bbd74702a4834d90, type: 3}
+  - {fileID: 2153216429128520066, guid: eba994395a62a4a00b4f4b7e0b5d205a, type: 3}
+  - {fileID: 6810164289552943210, guid: f2fea4cd89b0448b8858ce473f139e13, type: 3}
   m_SpawnPoint: {fileID: 1640132932}
   m_SpawnCooldown: 0.6
   m_Impulse: {x: 0, y: 0.15, z: 0.2}
+  m_CurrentIndex: 0
+  m_AdvanceAfterSpawn: 1
+  m_ShowCatalogLabel: 1
+  m_LabelOffset: {x: 0, y: 0.35, z: 0.05}
 --- !u!114 &800287142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -632,7 +679,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e8b9250a8a0f407db41eacb861cafb1, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::CSE165.Project1.SelectionHighlight
   m_HoverTint: {r: 1, g: 0.86, b: 0.38, a: 1}
   m_SelectedTint: {r: 0.42, g: 0.82, b: 1, a: 1}
@@ -649,10 +696,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a35f6cfbfba9b548aaa00d52cfe8a50, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 800287145}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -802,7 +850,7 @@ Transform:
   m_GameObject: {fileID: 800287140}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.65, y: 0, z: 1.2}
+  m_LocalPosition: {x: -1.45, y: 0, z: -1.81}
   m_LocalScale: {x: 0.22, y: 0.05, z: 0.22}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -826,7 +874,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &871837128
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -914,7 +962,7 @@ Transform:
   m_GameObject: {fileID: 871837127}
   serializedVersion: 2
   m_LocalRotation: {x: 0.07911837, y: 0.9177086, z: -0.31218097, w: 0.23258181}
-  m_LocalPosition: {x: -0.65, y: 1.05, z: 1.2}
+  m_LocalPosition: {x: -0.85, y: 1.05, z: 1.6}
   m_LocalScale: {x: 0.38, y: 0.04, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1140,7 +1188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &1162282411
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1228,7 +1276,7 @@ Transform:
   m_GameObject: {fileID: 1162282410}
   serializedVersion: 2
   m_LocalRotation: {x: -0.07911837, y: 0.9177086, z: -0.31218097, w: -0.23258181}
-  m_LocalPosition: {x: 0.65, y: 1.05, z: 1.2}
+  m_LocalPosition: {x: 0.85, y: 1.05, z: 1.6}
   m_LocalScale: {x: 0.38, y: 0.04, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1357,12 +1405,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a772cdda514fe4d4998a198a40d95599, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::CSE165.Project1.SpawnPad
   m_PrefabToSpawn: {fileID: 6651201712044238682, guid: 08ce0d61ecc014a7bbd74702a4834d90, type: 3}
+  m_PrefabsToSpawn:
+  - {fileID: 6651201712044238682, guid: 08ce0d61ecc014a7bbd74702a4834d90, type: 3}
+  - {fileID: 2153216429128520066, guid: eba994395a62a4a00b4f4b7e0b5d205a, type: 3}
+  - {fileID: 6810164289552943210, guid: f2fea4cd89b0448b8858ce473f139e13, type: 3}
+  - {fileID: 7249165047448114063, guid: f601eed58938447bebd2fe97c7195232, type: 3}
+  - {fileID: 7195988102628993825, guid: f30e659f4f2c1463690472ab1035718d, type: 3}
   m_SpawnPoint: {fileID: 1905860427}
   m_SpawnCooldown: 0.6
   m_Impulse: {x: 0, y: 0.15, z: 0.2}
+  m_CurrentIndex: 0
+  m_AdvanceAfterSpawn: 1
+  m_ShowCatalogLabel: 1
+  m_LabelOffset: {x: 0, y: 0.35, z: 0.05}
 --- !u!114 &1323310054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1373,7 +1431,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e8b9250a8a0f407db41eacb861cafb1, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::CSE165.Project1.SelectionHighlight
   m_HoverTint: {r: 1, g: 0.86, b: 0.38, a: 1}
   m_SelectedTint: {r: 0.42, g: 0.82, b: 1, a: 1}
@@ -1390,10 +1448,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a35f6cfbfba9b548aaa00d52cfe8a50, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable
   m_InteractionManager: {fileID: 0}
-  m_Colliders: []
+  m_Colliders:
+  - {fileID: 1323310057}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -1543,7 +1602,7 @@ Transform:
   m_GameObject: {fileID: 1323310052}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.65, y: 0, z: 1.2}
+  m_LocalPosition: {x: 1.246, y: 0, z: -2.058}
   m_LocalScale: {x: 0.22, y: 0.05, z: 0.22}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1567,7 +1626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &1379257803
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1655,7 +1714,7 @@ Transform:
   m_GameObject: {fileID: 1379257802}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2104181, y: -0.6750735, z: 0.2104181, w: 0.6750735}
-  m_LocalPosition: {x: 2.1, y: 1.45, z: 0}
+  m_LocalPosition: {x: 2.6, y: 1.45, z: 0}
   m_LocalScale: {x: 0.9, y: 0.04, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1883,7 +1942,7 @@ Transform:
   m_GameObject: {fileID: 1640132931}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.65, y: 0.28, z: 1.62}
+  m_LocalPosition: {x: -1.45, y: 0.28, z: -1.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1919,7 +1978,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 38f6bf3d943ac7945842268c9ef1dca6, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation.TeleportationArea
   m_InteractionManager: {fileID: 0}
   m_Colliders: []
@@ -2079,8 +2138,8 @@ Transform:
   m_GameObject: {fileID: 1699262712}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.05, z: 0}
-  m_LocalScale: {x: 5.4, y: 0.1, z: 5.4}
+  m_LocalPosition: {x: 0, y: -0.03, z: 0}
+  m_LocalScale: {x: 18, y: 0.1, z: 18}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2095,27 +2154,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 515f34272ffea474d859dda040d1e270, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.010799998
+      value: 0.27
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 515f34272ffea474d859dda040d1e270, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.010799998
+      value: 0.27
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 515f34272ffea474d859dda040d1e270, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.010799998
+      value: 0.27
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 515f34272ffea474d859dda040d1e270, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3.139
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 515f34272ffea474d859dda040d1e270, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00078300014
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 515f34272ffea474d859dda040d1e270, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 3.156
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 515f34272ffea474d859dda040d1e270, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2179,7 +2238,7 @@ Transform:
   m_GameObject: {fileID: 1905860426}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.65, y: 0.28, z: 1.62}
+  m_LocalPosition: {x: 1.246, y: 0.28, z: -1.638}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

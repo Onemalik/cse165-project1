@@ -265,46 +265,46 @@ MonoBehaviour:
   m_Name: Android
   m_EditorClassIdentifier: Unity.XR.OpenXR::UnityEngine.XR.OpenXR.OpenXRSettings
   features:
-  - {fileID: -6319752074402590811}
-  - {fileID: 548249052750573232}
-  - {fileID: -1436165447013335489}
-  - {fileID: -8392815907840105823}
-  - {fileID: 4421855978198495052}
-  - {fileID: 1111279681013723825}
-  - {fileID: 7003532384281848686}
+  - {fileID: 2869633545475580406}
   - {fileID: -1704853879873542264}
+  - {fileID: 1111279681013723825}
+  - {fileID: 4421855978198495052}
+  - {fileID: -4960399553399111359}
+  - {fileID: 670261698296325206}
   - {fileID: 6629444085460541317}
-  - {fileID: 2908489188678449751}
+  - {fileID: -7943939900072109801}
   - {fileID: 1629424438848879447}
   - {fileID: 8733287610528127980}
-  - {fileID: -7466850447552480775}
-  - {fileID: -7822500146514109384}
-  - {fileID: -7943939900072109801}
+  - {fileID: -8392815907840105823}
+  - {fileID: 7003532384281848686}
   - {fileID: 6692841699790244549}
-  - {fileID: 670261698296325206}
-  - {fileID: -4960399553399111359}
-  - {fileID: 5008766362925863780}
-  - {fileID: -240874780251178553}
-  - {fileID: 2981982981733467377}
-  - {fileID: 3968667671190526780}
-  - {fileID: -7411670674586336667}
   - {fileID: 1584218040392674716}
-  - {fileID: -9179273039148595325}
-  - {fileID: -4830137585669006665}
-  - {fileID: 2869633545475580406}
   - {fileID: -7526253584239625428}
-  - {fileID: -7372341880656600708}
   - {fileID: 7873279382695445012}
+  - {fileID: 2981982981733467377}
+  - {fileID: -7411670674586336667}
+  - {fileID: -4830137585669006665}
+  - {fileID: 3968667671190526780}
+  - {fileID: -7372341880656600708}
+  - {fileID: -9179273039148595325}
   - {fileID: -3893092387114570552}
+  - {fileID: -240874780251178553}
+  - {fileID: 2908489188678449751}
+  - {fileID: -1436165447013335489}
+  - {fileID: 548249052750573232}
+  - {fileID: 5008766362925863780}
+  - {fileID: -7466850447552480775}
+  - {fileID: -6319752074402590811}
+  - {fileID: -7822500146514109384}
   customLoaderName: 
   m_renderMode: 1
-  m_latencyOptimization: 0
+  m_latencyOptimization: 1
   m_autoColorSubmissionMode: 1
   m_colorSubmissionModes:
     m_List: 00000000
   m_depthSubmissionMode: 0
   m_spacewarpMotionVectorTextureFormat: 0
-  m_optimizeBufferDiscards: 0
+  m_optimizeBufferDiscards: 1
   m_symmetricProjection: 0
   m_optimizeMultiviewRenderRegions: 0
   m_multiviewRenderRegionsOptimizationMode: 0
@@ -865,7 +865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6096094d69d82cc40947df806f66ab34, type: 3}
   m_Name: OpenXRCompositionLayersFeature Android
   m_EditorClassIdentifier: Unity.XR.OpenXR::UnityEngine.XR.OpenXR.Features.CompositionLayers.OpenXRCompositionLayersFeature
-  m_enabled: 0
+  m_enabled: 1
   nameUi: Composition Layers Support
   version: 1.0.0
   featureIdInternal: com.unity.openxr.feature.compositionlayers
@@ -1589,38 +1589,38 @@ MonoBehaviour:
   m_Name: Standalone
   m_EditorClassIdentifier: Unity.XR.OpenXR::UnityEngine.XR.OpenXR.OpenXRSettings
   features:
-  - {fileID: 6847654517734592481}
-  - {fileID: -8851757913919843793}
-  - {fileID: 6269573996139606226}
+  - {fileID: 2942743066695542293}
   - {fileID: 1841177651929109030}
-  - {fileID: 3275671033522429721}
-  - {fileID: 4752205409666834638}
+  - {fileID: 6269573996139606226}
+  - {fileID: -2449392649854951661}
+  - {fileID: 7656323958241276702}
   - {fileID: 8160871781502625552}
-  - {fileID: 1465860593234824220}
+  - {fileID: 80831558100108225}
   - {fileID: -4039258212139639426}
   - {fileID: -1311278695508999826}
+  - {fileID: -6077446905182688454}
   - {fileID: -4976547410981737519}
+  - {fileID: 3275671033522429721}
+  - {fileID: 2415004630936801795}
+  - {fileID: 4510121302311759977}
+  - {fileID: -2994555654343855207}
+  - {fileID: 8942740367752729321}
+  - {fileID: 6993614872289570629}
+  - {fileID: -3921402655778436670}
+  - {fileID: -3443702238741843603}
+  - {fileID: 8852514155694033114}
+  - {fileID: -776677808098318652}
+  - {fileID: 7425163530086432432}
+  - {fileID: -7298670204037644148}
+  - {fileID: 8574852045924650690}
+  - {fileID: 1465860593234824220}
+  - {fileID: 4752205409666834638}
+  - {fileID: -8851757913919843793}
+  - {fileID: 4996389134996221067}
   - {fileID: 5753102609489643923}
+  - {fileID: 6847654517734592481}
   - {fileID: 2843218531202723276}
   - {fileID: -62172746145286475}
-  - {fileID: 80831558100108225}
-  - {fileID: 2415004630936801795}
-  - {fileID: 7656323958241276702}
-  - {fileID: -2449392649854951661}
-  - {fileID: -6077446905182688454}
-  - {fileID: 4996389134996221067}
-  - {fileID: 8574852045924650690}
-  - {fileID: 6993614872289570629}
-  - {fileID: 8852514155694033114}
-  - {fileID: -3921402655778436670}
-  - {fileID: 4510121302311759977}
-  - {fileID: 7425163530086432432}
-  - {fileID: -3443702238741843603}
-  - {fileID: 2942743066695542293}
-  - {fileID: -2994555654343855207}
-  - {fileID: -776677808098318652}
-  - {fileID: 8942740367752729321}
-  - {fileID: -7298670204037644148}
   customLoaderName: 
   m_renderMode: 1
   m_latencyOptimization: 0
