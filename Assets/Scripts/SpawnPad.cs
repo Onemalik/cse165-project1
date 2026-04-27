@@ -73,9 +73,7 @@ namespace CSE165.Project1
             if (m_LabelRoot == null || Camera.main == null)
                 return;
 
-            var toCamera = Camera.main.transform.position - m_LabelRoot.position;
-            if (toCamera.sqrMagnitude > 0.001f)
-                m_LabelRoot.rotation = Quaternion.LookRotation(toCamera.normalized, Vector3.up);
+            m_LabelRoot.rotation = Quaternion.LookRotation(Camera.main.transform.forward, Camera.main.transform.up);
         }
 
         void OnSelectEntered(SelectEnterEventArgs args)
